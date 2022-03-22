@@ -17,6 +17,20 @@ describe('Teste do componente App', () => {
     const { history } = renderWithRouter(<App />);
     expect(history.location.pathname).toEqual('/');
   });
+
+  it('Teste dos links do menu', () => {
+    const { history } = renderWithRouter(<App />);
+    const homeLink = screen.getByRole('link', { name: /home/i });
+    const aboutLink = screen.getByRole('link', { name: /about/i });
+    const favoriteLink = screen.getByRole('link', { name: /Favorite Pokémons/i });
+    expect(homeLink).toBeInTheDocument();
+    expect(aboutLink).toBeInTheDocument();
+    expect(favoriteLink).toBeInTheDocument();
+    userEvent.click(homeLink);
+    expect(history.location.pathname).toEqual('/');
+    userEvent.click(aboutLink);
+    expect(history.location.pathname).toEqual('/about');
+    userEvent.click(favoriteLink);
+    expect(history.location.pathname).toEqual('/favorites');
+  });
 });
-
-
