@@ -40,16 +40,10 @@ describe('Teste do componente App', () => {
       expect(btn).toBeInTheDocument();
     });
   });
-  it('Teste de apresentação dos pokemons', () => {
+  it('Teste de apresentação dos pokemons e utilizacao btn Próximo Pokémon', () => {
     renderWithRouter(<App />);
     const btnNextPoke = screen.getByRole('button',
       { name: /próximo pokémon/i });
-    expect(btnNextPoke).toBeInTheDocument();
-    // const btnTypes = [];
-    // types.forEach((type, index) => {
-    //   btnTypes[index] = screen.getByRole('button', { name: type });
-    // });
-    // btnTypes.push(screen.getByRole('button', { name: /all/i }));
     pokemonNames.forEach((pokemonName) => {
       const card = screen.getByText(pokemonName);
       expect(card).toBeInTheDocument();
@@ -57,5 +51,17 @@ describe('Teste do componente App', () => {
     });
     const card = screen.getByText(pokemonNames[0]);
     expect(card).toBeInTheDocument();
+  });
+  it('Teste do funcionamento do botão All', () => {
+    renderWithRouter(<App />);
+    const btnNextPoke = screen.getByRole('button',
+      { name: /próximo pokémon/i });
+    userEvent.click(btnNextPoke);
+    userEvent.click(btnNextPoke);
+    const btnTypeAll = screen.getByRole('button',
+      { name: /all/i });
+    userEvent.click(btnTypeAll);
+    const pokeName = screen.getByText(pokemonNames[0]);
+    expect(pokeName).toBeInTheDocument();
   });
 });
