@@ -40,7 +40,10 @@ describe('Teste do componente App', () => {
     });
     btnTypes.forEach((btn) => {
       expect(btn).toBeInTheDocument();
+      // expect(btn.dataTestId).toContain('pokemon-type-button');
     });
+    const btnByTestId = screen.getAllByTestId('pokemon-type-button');
+    expect(btnByTestId.length).toBe(types.length);
   });
   it('Teste de apresentação dos pokemons e utilizacao btn Próximo Pokémon', () => {
     renderWithRouter(<App />);
@@ -72,8 +75,8 @@ describe('Teste do componente App', () => {
     const namesOfSelected = pokemons
       .filter((pokemon) => pokemon.type === selectedType)
       .map((pokemon) => pokemon.name);
-    console.log(selectedType);
-    console.log(namesOfSelected);
+    // console.log(selectedType);
+    // console.log(namesOfSelected);
     const btnOfType = screen.getByRole('button', { name: selectedType });
     expect(btnOfType).toBeInTheDocument();
     userEvent.click(btnOfType);
@@ -86,5 +89,14 @@ describe('Teste do componente App', () => {
     });
     const card = screen.getByText(namesOfSelected[0]);
     expect(card).toBeInTheDocument();
+  });
+  it('Teste se apenas um pokemon é renderizado por vez', () => {
+    renderWithRouter(<App />);
+    const images = screen.getAllByRole('img');
+    expect(images.length).toBe(1);
+    const detailLinks = screen.getAllByRole('link', { name: /more details/i });
+    expect(detailLinks.length).toBe(1);
+    const weigthText = screen.getAllByText(/average weight/i);
+    expect(weigthText.length).toBe(1);
   });
 });
