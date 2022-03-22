@@ -40,7 +40,22 @@ describe('Teste do componente App', () => {
       expect(btn).toBeInTheDocument();
     });
   });
-  it('Teste de interação com os componentes', ()=> {
-
-  })
+  it('Teste de apresentação dos pokemons', () => {
+    renderWithRouter(<App />);
+    const btnNextPoke = screen.getByRole('button',
+      { name: /próximo pokémon/i });
+    expect(btnNextPoke).toBeInTheDocument();
+    // const btnTypes = [];
+    // types.forEach((type, index) => {
+    //   btnTypes[index] = screen.getByRole('button', { name: type });
+    // });
+    // btnTypes.push(screen.getByRole('button', { name: /all/i }));
+    pokemonNames.forEach((pokemonName) => {
+      const card = screen.getByText(pokemonName);
+      expect(card).toBeInTheDocument();
+      userEvent.click(btnNextPoke);
+    });
+    const card = screen.getByText(pokemonNames[0]);
+    expect(card).toBeInTheDocument();
+  });
 });
