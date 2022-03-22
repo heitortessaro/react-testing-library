@@ -15,6 +15,8 @@ describe('Teste do componente App', () => {
   };
   const typesArr = pokemons.map((pokemon) => pokemon.type);
   const types = typesArr.filter((type, index) => typesArr.indexOf(type) === index);
+  // console.log(types[0]);
+  // console.log(types.pop());
   const pokemonNames = pokemons.map((pokemon) => pokemon.name);
 
   it('Teste de rota', () => {
@@ -63,5 +65,26 @@ describe('Teste do componente App', () => {
     userEvent.click(btnTypeAll);
     const pokeName = screen.getByText(pokemonNames[0]);
     expect(pokeName).toBeInTheDocument();
+  });
+  it('Testa filtro por tipo de pokemon', () => {
+    renderWithRouter(<App />);
+    const selectedType = types.pop();
+    const namesOfSelected = pokemons
+      .filter((pokemon) => pokemon.type === selectedType)
+      .map((pokemon) => pokemon.name);
+    console.log(selectedType);
+    console.log(namesOfSelected);
+    const btnOfType = screen.getByRole('button', { name: selectedType });
+    expect(btnOfType).toBeInTheDocument();
+    userEvent.click(btnOfType);
+    const btnNextPoke = screen.getByRole('button',
+      { name: /próximo pokémon/i });
+    namesOfSelected.forEach((name) => {
+      const card = screen.getByText(name);
+      expect(card).toBeInTheDocument();
+      userEvent.click(btnNextPoke);
+    });
+    const card = screen.getByText(namesOfSelected[0]);
+    expect(card).toBeInTheDocument();
   });
 });
