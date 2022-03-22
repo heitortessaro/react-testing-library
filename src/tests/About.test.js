@@ -1,7 +1,6 @@
 import React from 'react';
 import { Router } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 import App from '../App';
 
@@ -28,7 +27,7 @@ describe('Teste do componente About', () => {
     const image = screen.getByAltText(/pokédex/i);
     expect(image).toBeInTheDocument();
     const IMAGE_URL = 'https://cdn2.bulbagarden.net/upload/thumb/8/86/Gen_I_Pok%C3%A9dex.png/800px-Gen_I_Pok%C3%A9dex.png';
-    console.log(image);
+    // console.log(image);
     expect(image.src).toEqual(IMAGE_URL);
     const firstP = screen.getByText(/this application simulates a pokédex/i);
     expect(firstP).toBeInTheDocument();
