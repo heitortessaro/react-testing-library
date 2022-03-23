@@ -29,6 +29,25 @@ describe('Teste do componente App', () => {
     expect(screen.getByRole('heading', { name: /summary/i })).toBeInTheDocument();
     expect(screen.getByText(pokemons[0].summary)).toBeInTheDocument();
   });
+  it('Testa informações de localização do pokemon', () => {
+    renderWithRouter(<App />);
+    const detailsLink = screen.getByRole('link', { name: /more details/i });
+    userEvent.click(detailsLink);
+    const locationTitle = screen
+      .getByRole('heading', { name: `Game Locations of ${pokemons[0].name}` });
+    expect(locationTitle).toBeInTheDocument();
+    const { foundAt } = pokemons[0];
+    foundAt.forEach((location) => {
+      const locName = screen.getByText(location.location);
+      expect(locName).toBeInTheDocument();
+    });
+    // console.log(foundAt);
+    const maps = screen.getAllByAltText(`${pokemons[0].name} location`);
+    expect(maps.length).toEqual(foundAt.length);
+    maps.forEach((img, index) => {
+      expect(img.src).toEqual(foundAt[index].map);
+    })
+  });
   // it('Testa seleção de pokemon favorito', () => {
   //   renderWithRouter(<App />);
   //   const detailsLink = screen.getByRole('link', { name: /more details/i });
