@@ -41,24 +41,10 @@ describe('Teste do componente App', () => {
       const locName = screen.getByText(location.location);
       expect(locName).toBeInTheDocument();
     });
-    // console.log(foundAt);
     const maps = screen.getAllByAltText(`${pokemons[0].name} location`);
     expect(maps.length).toEqual(foundAt.length);
     maps.forEach((img, index) => {
       expect(img.src).toEqual(foundAt[index].map);
-    })
+    });
   });
-  // it('Testa seleção de pokemon favorito', () => {
-  //   renderWithRouter(<App />);
-  //   const detailsLink = screen.getByRole('link', { name: /more details/i });
-  //   userEvent.click(detailsLink);
-  //   const checkbox = screen.getByLabelText(/Pokémon favoritado?/i);
-  //   expect(checkbox).toBeInTheDocument();
-  //   userEvent.click(checkbox);
-  //   const favoriteIcon = screen.getByRole('img', { name: /is marked as favorite/i });
-  //   expect(favoriteIcon).toBeInTheDocument();
-  //   expect(favoriteIcon.src).toContain('/star-icon.svg');
-  //   userEvent.click(checkbox);
-  //   expect(favoriteIcon).not.toBeInTheDocument();
-  // });
 });
