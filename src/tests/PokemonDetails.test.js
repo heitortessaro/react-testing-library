@@ -47,4 +47,19 @@ describe('Teste do componente App', () => {
       expect(img.src).toEqual(foundAt[index].map);
     });
   });
+  it('Testa seleção de pokemon favorito', () => {
+    renderWithRouter(<App />);
+    const detailsLink = screen.getByRole('link', { name: /more details/i });
+    userEvent.click(detailsLink);
+    expect(screen.getByText(/Pokémon favoritado?/i)).toBeInTheDocument();
+    const checkbox = screen.getByLabelText(/Pokémon favoritado?/i);
+    console.log(checkbox);
+    expect(checkbox).toBeInTheDocument();
+    userEvent.click(checkbox);
+    const favoriteIcon = screen.getByRole('img', { name: /is marked as favorite/i });
+    expect(favoriteIcon).toBeInTheDocument();
+    expect(favoriteIcon.src).toContain('/star-icon.svg');
+    userEvent.click(checkbox);
+    expect(favoriteIcon).not.toBeInTheDocument();
+  });
 });
