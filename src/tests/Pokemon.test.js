@@ -34,10 +34,20 @@ describe('Teste do componente App', () => {
       expect(image.src).toEqual(pokemon.image);
       userEvent.click(btnNextPoke);
     });
-    // const card = screen.getByText(pokemonNames[0]);
-    // expect(card).toBeInTheDocument();
   });
-  // it('Teste de rota', () => {
+  it('Testa link e page de detalhes sobre pokemon', () => {
+    const { history } = renderWithRouter(<App />);
+    const pokemonName = screen.getByText(pokemons[0].name);
+    expect(pokemonName).toBeInTheDocument();
+    const detailsLink = screen.getByRole('link', { name: /more details/i });
+    expect(detailsLink).toBeInTheDocument();
+    expect(detailsLink.href).toContain(`/pokemons/${pokemons[0].id}`);
+    userEvent.click(detailsLink);
+    expect(history.location.pathname).toContain(`/pokemons/${pokemons[0].id}`);
+  });
+});
+
+// it('Teste de rota', () => {
   //   const { history } = renderWithRouter(<App />);
   //   expect(history.location.pathname).toEqual('/');
   // });
@@ -117,4 +127,4 @@ describe('Teste do componente App', () => {
   //   const weigthText = screen.getAllByText(/average weight/i);
   //   expect(weigthText.length).toBe(1);
   // });
-});
+// });
